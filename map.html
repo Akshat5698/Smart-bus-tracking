@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bus Routes - Smart Bus Tracking</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
+
+    /* Navbar */
+    nav {
+      background: #0077b6;
+      padding: 15px;
+      text-align: right;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 15px 0;
+      color: #333;
+    }
+
+    /* Layout */
+    .container {
+      display: flex;
+      padding: 20px;
+    }
+    #map {
+      flex: 3;
+      height: 500px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .routes {
+      flex: 1;
+      margin-left: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      padding: 15px;
+      overflow-y: auto;
+      max-height: 500px;
+    }
+    .routes h3 {
+      text-align: center;
+      color: #007bff;
+    }
+    .routes ul {
+      list-style: none;
+      padding: 0;
+    }
+    .routes li {
+      background: #f9f9f9;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .routes li:hover {
+      background: #e3f2fd;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation bar -->
+  <nav>
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="map.html">Live Map</a>
+  <a href="crash.html">Crash Alert</a>
+  <a href="about.html">About</a>
+  </nav>
+
+  <h2>Bus Routes - Chandigarh University Nawabganj to Lucknow</h2>
+  <div class="container">
+    <div id="map"></div>
+    <div class="routes">
+      <h3>Available Routes</h3>
+      <ul>
+        <li onclick="showRoute(0)">Route 1: CU Nawabganj → Unnao Bypass → Ramadevi → Lucknow</li>
+        <li onclick="showRoute(1)">Route 2: CU Nawabganj → Kanpur Road → Alambagh → Lucknow</li>
+        <li onclick="showRoute(2)">Route 3: CU Nawabganj → Amausi Airport → Charbagh → Lucknow</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let map, directionsService, directionsRenderer;
+    const routes = [
+      {
+        name: "Route 1",
+        stops: [
+          { lat: 26.5478, lng: 80.4870 }, // CU Nawabganj
+          { lat: 26.5472, lng: 80.4885 }, // Unnao Bypass (dummy coords)
+          { lat: 26.4499, lng: 80.3319 }, // Ramadevi
+          { lat: 26.8467, lng: 80.9462 }, // Lucknow
+        ],
+      },
+      {
+        name: "Route 2",
+        stops: [
+          { lat: 26.5478, lng: 80.4870 },
+          { lat: 26.7606, lng: 80.8780 }, // Kanpur Road
+          { lat: 26.8070, lng: 80.9020 }, // Alambagh
+          { lat: 26.8467, lng: 80.9462 },
+        ],
+      },
+      {
+        name: "Route 3",
+        stops: [
+          { lat: 26.5478, lng: 80.4870 },
+          { lat: 26.7611, lng: 80.8890 }, // Amausi Airport
+          { lat: 26.8393, lng: 80.9360 }, // Charbagh
+          { lat: 26.8467, lng: 80.9462 },
+        ],
+      },
+    ];
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 9,
+        center: { lat: 26.8, lng: 80.8 },
+      });
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+    }
+
+    function showRoute(index) {
+      const waypts = routes[index].stops.slice(1, -1).map(stop => ({
+        location: stop,
+        stopover: true,
+      }));
+
+      directionsService.route(
+        {
+          origin: routes[index].stops[0],
+          destination: routes[index].stops[routes[index].stops.length - 1],
+          waypoints: waypts,
+          travelMode: google.maps.TravelMode.DRIVING,
+        },
+        (response, status) => {
+          if (status === "OK") {
+            directionsRenderer.setDirections(response);
+          } else {
+            alert("Directions request failed: " + status);
+          }
+        }
+      );
+    }
+  </script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2uZZUUeSvVNb2rtSR__zGl5zaJ7diXNo&callback=initMap"></script>
+
+</body>
+</html>
