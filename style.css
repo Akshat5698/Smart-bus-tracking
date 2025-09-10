@@ -13,8 +13,11 @@ body {
   line-height: 1.6;
 }
 
-h1, h2 {
-  color: #78a7e5;
+h1 {
+  color: #032a5a;
+}
+h2 {
+  color: #4787d6;
 }
 
 /* Navbar */
@@ -36,6 +39,7 @@ header h1 {
 
 nav a {
   margin: 0 12px;
+  text-align: center;
   text-decoration: none;
   color: white;
   font-weight: 600;
@@ -48,8 +52,8 @@ nav a:hover {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-              url("images/bus-bg.jpg") center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("images/bus-bg.jpg") center/cover no-repeat;
   height: 70vh;
   display: flex;
   justify-content: center;
@@ -87,7 +91,7 @@ nav a:hover {
   background: white;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.2s;
 }
@@ -107,7 +111,7 @@ nav a:hover {
   display: block;
   margin: 20px auto;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Footer */
@@ -117,4 +121,36 @@ footer {
   text-align: center;
   padding: 15px;
   margin-top: 30px;
+}
+/* Default Light Theme */
+body {
+  background-color: #ffffff;
+  color: #222;
+  font-family: Arial, sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Dark Theme */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+/* Theme Button Styling */
+.theme-btn {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.theme-btn:hover {
+  background: #0056b3;
 }
